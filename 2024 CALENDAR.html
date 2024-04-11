@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap">
+<style>
+  body {
+    background-color: #AED6F1; /* Pastel blue color */
+    color: blue; /* Blue font color */
+    font-family: 'Bubblegum Sans', cursive; /* Bubblegum font */
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #AED6F1; /* Pastel blue color for table background */
+    border-radius: 10px; /* Rounded corners for the table */
+    border: 2px solid #3686BE; /* Border color for the table */
+    font-family: 'Bubblegum Sans', cursive; /* Bubblegum font */
+  }
+  th, td {
+    border: 2px solid #00008B;
+    text-align: center;
+    padding: 8px;
+    font-family: 'Bubblegum Sans', cursive; /* Bubblegum font */
+  }
+  th {
+    background-color: #3686BE; /* Darker blue color for header background */
+    color: white; /* White font color for header */
+  }
+  .holiday {
+    background-color: #3686BE; /* Darker blue color for holiday background */
+    color: white; /* White font color for holiday */
+  }
+</style>
+</head>
+<body>
+
+<h2>Calendar 2024</h2>
+
+<div id="calendar"></div>
+
+<script>
+  function displayCalendar() {
+    const months = ['💙 January 🎆', '🩵 February 🫰🏻', '🍀 March 💎', '🐦 April 🪺', '🫧 May 🐬', '🌊 June 🐳', '✨ July 🐻‍❄️', '❄️ August💧', '🐟 September 🦭', '👻 October 🌀', '🧊 November 💫', '☃️ December 🌟'];
+    const holidays = [
+      [1], // January: New Year's Day
+      [9,10], // February: No holidays in this example
+      [28,29,30], // March: 
+      [9,10], // April
+      [1], // May: International Workers' Day
+      [12], // June: Independence Day
+      [], // July
+      [21,26], // August: national heroes' day
+      [3], // September: Unity Day
+      [], // October
+      [1,2,30], // November: Independence Day
+      [8,24,25,30,31] // December: Christmas Day
+    ];
+
+    let calendarHTML = '';
+
+    for (let month = 0; month < months.length; month++) {
+      let currentDate = new Date(2024, month, 1);
+      let year = currentDate.getFullYear();
+      let monthName = months[month];
+      let daysInMonth = new Date(year, month + 1, 0).getDate();
+      let firstDayOfMonth = new Date(year, month, 1).getDay();
+      
+      calendarHTML += '<h3>' + monthName + ' ' + year + '</h3>';
+      calendarHTML += '<table>';
+      calendarHTML += '<tr><th colspan="7">' + monthName + '</th></tr>';
+      calendarHTML += '<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>';
+
+      let day = 1;
+      for (let i = 0; i < 6; i++) {
+        calendarHTML += '<tr>';
+        for (let j = 0; j < 7; j++) {
+          if (i === 0 && j < firstDayOfMonth) {
+            calendarHTML += '<td></td>';
+          } else if (day > daysInMonth) {
+            calendarHTML += '<td></td>';
+          } else {
+            let isHoliday = holidays[month].includes(day);
+            if (isHoliday) {
+              calendarHTML += '<td class="holiday">' + day + '</td>';
+            } else {
+              calendarHTML += '<td>' + day + '</td>';
+            }
+            day++;
+          }
+        }
+        calendarHTML += '</tr>';
+      }
+      calendarHTML += '</table>';
+    }
+
+    document.getElementById('calendar').innerHTML = calendarHTML;
+  }
+
+  displayCalendar();
+</script>
+
+</body>
+</html>
